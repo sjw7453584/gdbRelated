@@ -699,7 +699,7 @@ define bsave
   set logging on
   info break
   set logging off
-  shell  sed -n "2,$"p "brestore.txt"|sed 's/ at /?b /'|cut -d '?' -f 2 > brestore.gdb
+  shell  sed -n "2,$"p "brestore.txt"|grep " at " |sed 's/ at /?b /'|cut -d '?' -f 2 > brestore.gdb
   # reformat on-the-fly to a valid gdb command file
   #shell perl -n -e 'print "break $1n" if /^d+.+?(S+)$/g' ~/brestore.txt > ~/brestore.gdb
 end
