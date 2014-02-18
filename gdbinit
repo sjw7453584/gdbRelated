@@ -699,29 +699,10 @@ define bsave
   set logging on
   info break
   set logging off
+  shell  sed -n "2,$"p "brestore.txt"|sed 's/ at /?b /'|cut -d '?' -f 2 > brestore.gdb
   # reformat on-the-fly to a valid gdb command file
-  shell perl -n -e 'print "break $1n" if /^d+.+?(S+)$/g' brestore.txt > brestore.gdb
-end 
-document bsave
-store actual breakpoints
+  #shell perl -n -e 'print "break $1n" if /^d+.+?(S+)$/g' ~/brestore.txt > ~/brestore.gdb
 end
-
-define brestore
-  source brestore.gdb
-end
-document brestore
-restore breakpoints saved by bsave
-end
-
-define bsave
-  shell rm -f brestore.txt
-  set logging file brestore.txt
-  set logging on
-  info break
-  set logging off
-  # reformat on-the-fly to a valid gdb command file
-  shell perl -n -e 'print "break $1n" if /^d+.+?(S+)$/g' brestore.txt > brestore.gdb
-end 
 document bsave
 store actual breakpoints
 end
